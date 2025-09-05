@@ -24,14 +24,14 @@ public class UsuarioController {
 
     @PostMapping("/novoUsuario")
     public Usuario criarUsuario(@RequestBody Usuario user){
-        Usuario novo_usuario = crud.save(user);
-        return novo_usuario;
+        Usuario novoUsuario = crud.save(user);
+        return novoUsuario;
     }
 
     @PutMapping("/editarUsuario")
     public Usuario editarUsuario(@RequestBody Usuario user){
-        Usuario novo_usuario = crud.save(user);
-        return novo_usuario;
+        Usuario novoUsuario = crud.save(user);
+        return novoUsuario;
     }
 
     @DeleteMapping("/{id}")
