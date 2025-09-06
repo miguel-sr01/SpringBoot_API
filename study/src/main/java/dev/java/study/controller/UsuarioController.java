@@ -11,6 +11,8 @@ import dev.java.study.model.Usuario;
 
 
 @RestController
+@CrossOrigin("*")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired

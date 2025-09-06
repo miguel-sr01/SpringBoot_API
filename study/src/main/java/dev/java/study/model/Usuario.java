@@ -32,7 +32,6 @@ public class Usuario {
     @Column(name = "telefone", length=15, nullable=true)
     private String telefone;
 
-
     public Integer getId() {
         return id;
     }
