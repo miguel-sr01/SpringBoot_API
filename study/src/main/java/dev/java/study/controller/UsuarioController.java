@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import dev.java.study.dao.IUsuario;
@@ -20,27 +21,27 @@ public class UsuarioController {
 
 
     @GetMapping("/listarUsuarios")
-    public List<Usuario> getUsuarios(){
-        return (List<Usuario>) crud.findAll();
+    public ResponseEntity <List<Usuario>> getUsuarios(){
+        List<Usuario> lista = (List<Usuario>) crud.findAll();
+        return ResponseEntity.status(200).body(lista);
     }
 
     @PostMapping("/novoUsuario")
-    public Usuario criarUsuario(@RequestBody Usuario user){
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario user){
         Usuario novoUsuario = crud.save(user);
-        return novoUsuario;
+        return ResponseEntity.status(201).body(novoUsuario);
     }
 
     @PutMapping("/editarUsuario")
-    public Usuario editarUsuario(@RequestBody Usuario user){
+    public ResponseEntity<Usuario> editarUsuario(@RequestBody Usuario user){
         Usuario novoUsuario = crud.save(user);
-        return novoUsuario;
+        return ResponseEntity.status(201).body(novoUsuario);
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Usuario> excluirUsuario(@PathVariable Integer id){
-        Optional<Usuario> usuario = crud.findById(id);
+    public ResponseEntity<?> excluirUsuario(@PathVariable Integer id){
         crud.deleteById(id);
-        return usuario;
+        return ResponseEntity.status(204).build();
     }
 
 }
