@@ -1,4 +1,4 @@
-package dev.java.study.Service;
+package dev.java.study.service;
 
 import dev.java.study.model.Usuario;
 import dev.java.study.repository.IUsuario;
