@@ -1,13 +1,12 @@
 package dev.java.study.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import dev.java.study.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import dev.java.study.dao.IUsuario;
 import dev.java.study.model.Usuario;
 
 
@@ -17,31 +16,27 @@ import dev.java.study.model.Usuario;
 public class UsuarioController {
 
     @Autowired
-    private IUsuario crud;
+    private UsuarioService service;
 
 
     @GetMapping("/listarUsuarios")
     public ResponseEntity <List<Usuario>> getUsuarios(){
-        List<Usuario> lista = (List<Usuario>) crud.findAll();
-        return ResponseEntity.status(200).body(lista);
+        return service.getUsuarios();
     }
 
     @PostMapping("/novoUsuario")
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario user){
-        Usuario novoUsuario = crud.save(user);
-        return ResponseEntity.status(201).body(novoUsuario);
+        return service.criarUsuario(user);
     }
 
     @PutMapping("/editarUsuario")
     public ResponseEntity<Usuario> editarUsuario(@RequestBody Usuario user){
-        Usuario novoUsuario = crud.save(user);
-        return ResponseEntity.status(201).body(novoUsuario);
+        return service.editarUsuario(user);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluirUsuario(@PathVariable Integer id){
-        crud.deleteById(id);
-        return ResponseEntity.status(204).build();
+        return service.excluirUsuario(id);
     }
 
 }
