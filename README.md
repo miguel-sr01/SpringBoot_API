@@ -1,0 +1,1 @@
+Projeto Java Spring para criação de uma Api Rest que realiza os comandos básicos (CRUD) em um banco de dados MySql. O projeto conta com um simples front-end que se comunica com o back-end e realiza as operações de pensistência no banco de dados.
