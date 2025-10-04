@@ -32,6 +32,12 @@ public class Passageiro {
     @Column(name = "plataforma", length=15, nullable=true)
     private String plataforma;
 
+    public Passageiro(String nome, String origem, String destino) {
+        this.nome = nome;
+        this.origem = origem;
+        this.destino = destino;
+    }
+
     public Integer getId() {
         return id;
     }
