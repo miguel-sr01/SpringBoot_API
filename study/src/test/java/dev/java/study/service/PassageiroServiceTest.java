@@ -27,7 +27,6 @@ class PassageiroServiceTest {
 
 
     @InjectMocks
-
     private PassageiroService passageiroService;
 
     @Test
