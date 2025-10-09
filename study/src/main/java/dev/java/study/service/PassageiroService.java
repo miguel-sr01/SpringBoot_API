@@ -14,25 +14,24 @@ import java.util.List;
 public class PassageiroService {
 
     @Autowired
-    private IPassageiro crud;
+    private IPassageiro jpa;
 
-    public ResponseEntity<List<Passageiro>> getPassageiros(){
-        List<Passageiro> lista = (List<Passageiro>) crud.findAll();
-        return ResponseEntity.status(200).body(lista);
+    public List<Passageiro> getPassageiros() {
+        return jpa.findAll();
     }
 
-    public ResponseEntity<Passageiro> criarPassageiro(@RequestBody Passageiro user){
-        Passageiro novoPassageiro = crud.save(user);
-        return ResponseEntity.status(201).body(novoPassageiro);
+    public Passageiro criarPassageiro(Passageiro user){
+        return jpa.save(user);
     }
 
-    public ResponseEntity<Passageiro> editarPassageiro(@RequestBody Passageiro user){
-        Passageiro novoPassageiro = crud.save(user);
-        return ResponseEntity.status(201).body(novoPassageiro);
+    public Passageiro editarPassageiro(Passageiro user){
+        return jpa.save(user);
     }
 
-    public ResponseEntity<?> excluirPassageiro(@PathVariable Integer id){
-        crud.deleteById(id);
-        return ResponseEntity.status(204).build();
+    public void excluirPassageiro(Integer id) throws Exception {
+        if (!jpa.existsById(id)){
+            throw new Exception("Passageiro não encontrado!");
+        }
+        jpa.deleteById(id);
     }
 }

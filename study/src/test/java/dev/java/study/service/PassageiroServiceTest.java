@@ -23,7 +23,7 @@ class PassageiroServiceTest {
 
 
     @Mock
-    private IPassageiro crud;
+    private IPassageiro jpa;
 
 
     @InjectMocks
@@ -34,10 +34,10 @@ class PassageiroServiceTest {
     void deveRetornarListaPassageiros() {
         //Arrange (Preparar / Montar o cenário)
         Passageiro passageiro = new Passageiro("Miguel", "Franca", "Uberlandia");
-        Mockito.when(crud.findAll()).thenReturn(Collections.singletonList(passageiro));
+        Mockito.when(jpa.findAll()).thenReturn(Collections.singletonList(passageiro));
 
         //Act (Agir / Executar)
-        List <Passageiro> lista = passageiroService.getPassageiros().getBody();
+        List <Passageiro> lista = passageiroService.getPassageiros();
 
         //Assert (Verificar / Afirmar)
         Assertions.assertNotNull(lista);
@@ -50,10 +50,10 @@ class PassageiroServiceTest {
     void deveCriarPassageiro() {
         //Arrange (Preparar / Montar o cenário)
         Passageiro passageiro = new Passageiro("Miguel", "Franca", "Uberlandia");
-        Mockito.when(crud.save(passageiro)).thenReturn(passageiro);
+        Mockito.when(jpa.save(passageiro)).thenReturn(passageiro);
 
         //Act (Agir / Executar)
-        Passageiro novoPassageiro = passageiroService.criarPassageiro(passageiro).getBody();
+        Passageiro novoPassageiro = passageiroService.criarPassageiro(passageiro);
 
         //Assert (Verificar / Afirmar)
         Assertions.assertNotNull(novoPassageiro);
@@ -67,10 +67,10 @@ class PassageiroServiceTest {
     void editarPassageiro() {
         //Arrange (Preparar / Montar o cenário)
         Passageiro passageiro = new Passageiro("Joao", "Franca", "SP");
-        Mockito.when(crud.save(passageiro)).thenReturn(passageiro);
+        Mockito.when(jpa.save(passageiro)).thenReturn(passageiro);
 
         //Act (Agir / Executar)
-        Passageiro novoPassageiro = passageiroService.editarPassageiro(passageiro).getBody();
+        Passageiro novoPassageiro = passageiroService.editarPassageiro(passageiro);
 
         //Assert (Verificar / Afirmar)
         Assertions.assertNotNull(novoPassageiro);
@@ -80,32 +80,21 @@ class PassageiroServiceTest {
     }
 
     @Test
-    @DisplayName("Deve excluir o passageiro pelo id e mostrar o status http 204")
-    void excluirPassageiro() {
+    @DisplayName("Deve excluir o passageiro pelo id quando ele existir")
+    void deveExcluirPassageiro() throws Exception {
         Integer id = 1;
 
-        //Arrange (Preparar / Montar o cenário)
-        // Como deleteById é void, usamos doNothing() para mockar
-        Mockito.doNothing().when(crud).deleteById(id);
+        // Arrange
+        Mockito.when(jpa.existsById(id)).thenReturn(true); // Simula que o passageiro existe
+        Mockito.doNothing().when(jpa).deleteById(id);
 
-        //Act (Agir / Executar)
-        HttpStatusCode status = passageiroService.excluirPassageiro(id).getStatusCode();
+        // Act
+        passageiroService.excluirPassageiro(id);
 
         // Assert
-        Assertions.assertEquals(HttpStatus.NO_CONTENT, status);
-
-        System.out.println(status);
-
-
-
-
+        // Verifica se o deleteById foi realmente chamado uma vez
+        Mockito.verify(jpa, Mockito.times(1)).deleteById(id);
     }
-
-
-
-
-
-
 
 
 }

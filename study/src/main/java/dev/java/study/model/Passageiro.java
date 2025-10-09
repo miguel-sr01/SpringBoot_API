@@ -38,6 +38,10 @@ public class Passageiro {
         this.destino = destino;
     }
 
+    public Passageiro(){
+
+    }
+
     public Integer getId() {
         return id;
     }
